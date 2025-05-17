@@ -4,7 +4,7 @@ This repository contains test suites for the Functional Programming course homew
 
 ## Important Note
 
-The tests in this repository were only tested on a macOS machine. They might also work on a Windows machine, but this might require some further configurations not listed in this document.
+The tests in this repository were only tested on a macOS machine. They might also work on a Windows machine, but this might require further configurations not listed in this document.
 
 ## Contributing
 
