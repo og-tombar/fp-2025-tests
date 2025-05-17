@@ -17,26 +17,26 @@ import Test.HUnit (Counts, Test (..), assertBool, assertEqual, runTestTT)
 import Prelude (Bool (..), Char, Either (..), Enum (..), Eq (..), IO, Int, Integer, Maybe (..), Num (..), Ord (..), Rational, Show (..), String, all, and, any, concat, concatMap, const, curry, div, divMod, drop, dropWhile, elem, error, even, filter, flip, foldr, fst, head, id, init, last, length, lines, lookup, map, maximum, minimum, mod, not, notElem, null, odd, or, otherwise, product, reverse, show, snd, splitAt, sum, tail, take, takeWhile, uncurry, undefined, unlines, unwords, unzip, words, zip, zipWith, (!!), ($), (&&), (++), (.), (/), (||))
 
 singleTree :: a -> Tree a
-singleTree x = Node Empty x Empty
+singleTree x = Tree Empty x Empty
 
 tree :: Tree Int
 tree =
-  Node
-    ( Node
-        ( Node
+  Tree
+    ( Tree
+        ( Tree
             (singleTree 8)
             4
             (singleTree 9)
         )
         2
-        ( Node
+        ( Tree
             (singleTree 10)
             5
             Empty
         )
     )
     1
-    ( Node
+    ( Tree
         (singleTree 6)
         3
         (singleTree 7)
@@ -44,21 +44,21 @@ tree =
 
 pdfTree :: Tree Int
 pdfTree =
-  Node
-    ( Node
-        (Node (singleTree 8) 4 (singleTree 9))
+  Tree
+    ( Tree
+        (Tree (singleTree 8) 4 (singleTree 9))
         2
-        (Node (singleTree 10) 5 Empty)
+        (Tree (singleTree 10) 5 Empty)
     )
     1
-    (Node (singleTree 6) 3 (singleTree 7))
+    (Tree (singleTree 6) 3 (singleTree 7))
 
 -- Full tree from PDF page 5 image (used for 'Full' classification)
 fullTreeImg :: Tree Int
 fullTreeImg =
-  Node
-    ( Node
-        (Node (singleTree 8) 4 (singleTree 9))
+  Tree
+    ( Tree
+        (Tree (singleTree 8) 4 (singleTree 9))
         2
         (singleTree 5)
     )
@@ -68,34 +68,34 @@ fullTreeImg =
 -- Perfect tree (3 levels full) (used for 'Perfect' classification)
 perfectTree3Levels :: Tree Int
 perfectTree3Levels =
-  Node
-    (Node (singleTree 4) 2 (singleTree 5))
+  Tree
+    (Tree (singleTree 4) 2 (singleTree 5))
     1
-    (Node (singleTree 6) 3 (singleTree 7))
+    (Tree (singleTree 6) 3 (singleTree 7))
 
 -- Degenerate tree from PDF page 6 image (right skewed) (used for 'Degenerate')
 degenerateTreePDF :: Tree Int
-degenerateTreePDF = Node Empty (1 :: Int) (Node Empty 2 (singleTree (3 :: Int)))
+degenerateTreePDF = Tree Empty (1 :: Int) (Tree Empty 2 (singleTree (3 :: Int)))
 
 -- Left skewed degenerate tree (another 'Degenerate' example)
 degenerateTreeLeft :: Tree Int
-degenerateTreeLeft = Node (Node (singleTree (3 :: Int)) 2 Empty) 1 Empty
+degenerateTreeLeft = Tree (Tree (singleTree (3 :: Int)) 2 Empty) 1 Empty
 
 -- Tree for FullAndComplete (but not Perfect)
 fullAndCompleteTreeExample :: Tree Int
 fullAndCompleteTreeExample =
-  Node
-    (Node (singleTree (4 :: Int)) 2 (singleTree (5 :: Int)))
+  Tree
+    (Tree (singleTree (4 :: Int)) 2 (singleTree (5 :: Int)))
     1
-    (Node Empty 3 Empty)
+    (Tree Empty 3 Empty)
 
 -- Other tree (neither full, complete, perfect, nor degenerate)
 otherTreeExample :: Tree Int
 otherTreeExample =
-  Node
-    (Node (singleTree (4 :: Int)) 2 Empty)
+  Tree
+    (Tree (singleTree (4 :: Int)) 2 Empty)
     1
-    (Node (singleTree (5 :: Int)) 3 Empty)
+    (Tree (singleTree (5 :: Int)) 3 Empty)
 
 -- Example InfiniteLists for testing
 natsInf :: InfiniteList Integer
@@ -140,30 +140,30 @@ tests =
       TestLabel "treeSize: Empty tree" $
         TestCase $
           assertEqual "treeSize Empty" 0 (treeSize (Empty :: Tree Int)),
-      TestLabel "treeSize: Single node tree" $
+      TestLabel "treeSize: Single Tree tree" $
         TestCase $
           assertEqual "treeSize singleNode" 1 (treeSize (singleTree (1 :: Int))),
       TestLabel "treeSize: Left-skewed tree (3 nodes)" $
         TestCase $
-          assertEqual "treeSize leftSkewed" 3 (treeSize (Node (Node (singleTree (3 :: Int)) 2 Empty) 1 Empty)),
+          assertEqual "treeSize leftSkewed" 3 (treeSize (Tree (Tree (singleTree (3 :: Int)) 2 Empty) 1 Empty)),
       TestLabel "treeSize: Right-skewed tree (3 nodes)" $
         TestCase $
-          assertEqual "treeSize rightSkewed" 3 (treeSize (Node Empty (1 :: Int) (Node Empty 2 (singleTree (3 :: Int))))),
+          assertEqual "treeSize rightSkewed" 3 (treeSize (Tree Empty (1 :: Int) (Tree Empty 2 (singleTree (3 :: Int))))),
       TestLabel "treeHeight: PDF example Empty" $
         TestCase $
           assertEqual "treeHeight Empty" 0 (treeHeight (Empty :: Tree Int)),
       TestLabel "treeHeight: PDF example tree" $
         TestCase $
           assertEqual "treeHeight pdfTree" 4 (treeHeight pdfTree),
-      TestLabel "treeHeight: Single node tree" $
+      TestLabel "treeHeight: Single Tree tree" $
         TestCase $
           assertEqual "treeHeight singleNode" 1 (treeHeight (singleTree (1 :: Int))),
       TestLabel "treeHeight: Left-skewed tree (3 nodes)" $
         TestCase $
-          assertEqual "treeHeight leftSkewed" 3 (treeHeight (Node (Node (singleTree (3 :: Int)) 2 Empty) 1 Empty)),
+          assertEqual "treeHeight leftSkewed" 3 (treeHeight (Tree (Tree (singleTree (3 :: Int)) 2 Empty) 1 Empty)),
       TestLabel "treeHeight: Right-skewed tree (3 nodes)" $
         TestCase $
-          assertEqual "treeHeight rightSkewed" 3 (treeHeight (Node Empty (1 :: Int) (Node Empty 2 (singleTree (3 :: Int))))),
+          assertEqual "treeHeight rightSkewed" 3 (treeHeight (Tree Empty (1 :: Int) (Tree Empty 2 (singleTree (3 :: Int))))),
       TestLabel "preOrder traversal" $
         TestCase $
           assertEqual
@@ -185,7 +185,7 @@ tests =
       TestLabel "classify: Empty tree is Perfect" $
         TestCase $
           assertEqual "classify Empty" Perfect (classify (Empty :: Tree Int)),
-      TestLabel "classify: Single node tree is Perfect" $
+      TestLabel "classify: Single Tree tree is Perfect" $
         TestCase $
           assertEqual "classify singleNode" Perfect (classify (singleTree (1 :: Int))),
       TestLabel "classify: PDF Full tree example (fullTreeImg)" $
@@ -212,7 +212,7 @@ tests =
       TestLabel "isBalanced: Empty tree" $
         TestCase $
           assertEqual "isBalanced Empty" True (isBalanced (Empty :: Tree Int)),
-      TestLabel "isBalanced: Single-node tree" $
+      TestLabel "isBalanced: Single-Tree tree" $
         TestCase $
           assertEqual "isBalanced singleNode" True (isBalanced (singleTree (1 :: Int))),
       TestLabel "isBalanced: Complete tree example (pdfTree)" $
