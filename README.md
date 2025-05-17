@@ -4,11 +4,13 @@ This repository contains test suites for the Functional Programming course homew
 
 ## Important Note
 
-The tests in this repository were only tested on a macOS machine. They might also work on a Windows machine, but this might require some further changes which are not listed in this document.
+The tests in this repository were only tested on a macOS machine. They might also work on a Windows machine, but this might require some further configurations not listed in this document.
 
 ## Contributing
 
-I try to do my best adding test cases that cover all examples in the homework PDF files. If you feel like the coverage is partial and you want to add more test cases, contact me at og.tombar@gmail.com and I will add you as a contributor to this repository.
+- I try to do my best adding test cases that cover all examples in the homework PDF files. If you feel like the coverage is partial and you want to add more test cases, contact me and I will add you as a contributor to this repository.
+- It is possible that there might be errors or inconsistencies in some of the tests, so use your judgement and don't take them for granted.
+- In both of the scenarios above, contact me at og.tombar@gmail.com.
 
 ## Prerequisites
 
@@ -45,6 +47,8 @@ Place your homework solution file in the corresponding `src` directory:
    ```bash
    stack test
    ```
+
+If this is the first time you use Stack to run tests, this might take a minute or two as it might run updates or install missing dependencies.
 
 ## Additional Information
 
