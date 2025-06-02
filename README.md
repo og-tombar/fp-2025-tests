@@ -69,4 +69,8 @@ hw2/
 hw3/
   ├── src/        # Place HW3.hs here
   └── test/       # Test suite for HW3
+
+hw4/
+  ├── src/        # Place HW4.hs here
+  └── test/       # Test suite for HW4
 ```
